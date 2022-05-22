@@ -80,10 +80,13 @@ return [
     |
     */
 
-    'locales' => [
-        'en',
-        'fr',
-        'es'
+    'locale' => 'en',
+
+    'available_locales' => ['en', 'es'],
+
+    'languages' => [
+        'en' => 'English',
+        'es' => 'Spanish'
     ],
 
     /*

@@ -14,13 +14,42 @@
                     <img src="./images/logo.svg" alt="Laracasts Logo" width="165" height="16">
                 </a>
             </div>
+            
 
             <div class="mt-8 md:mt-0">
-                <a href="/" class="text-xs font-bold uppercase">Home Page</a>
+               
+                     <!--  Category -->
+                     <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl">
+                    
+                        <div>
+                            <button 
+                            class="py-2 pl-3 pr-9 text-sm font-semibold w-36 text-left inline-flex">
+    
+                            {{ 'Languages' }}
+    
+                            <svg class="transform -rotate-90 absolute pointer-events-none " style="right: 12px;" width="22"
+                             height="22" viewBox="0 0 22 22">
+                            <g fill="none" fill-rule="evenodd">
+                                <path stroke="#000" stroke-opacity=".012" stroke-width=".5" d="M21 1v20.16H.84V1z">
+                                </path>
+                                <path fill="#222"
+                                      d="M13.854 7.224l-3.847 3.856 3.847 3.856-1.184 1.184-5.04-5.04 5.04-5.04z"></path>
+                            </g>
+                        </svg>
+                        </button>
+    
+                            <div class="py-2 absolute bg-gray-100 w-full mt-2 rounded-xl z-20">
+                                    
+                                @foreach (config('translatable.locales') as $locale)
+                                    <a href="{{ request()->url() }}?language={{ $locale }}"
+                                    class="@if (app()->getLocale() == $locale) border-indigo-400 @endif inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
+                                        [{{ strtoupper($locale) }}]
+                                    </a>
+                                @endforeach
 
-                <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-                    Subscribe for Updates
-                </a>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </nav>
 
@@ -32,9 +61,12 @@
             <h2 class="inline-flex mt-2">By Lary Laracore <img src="./images/lary-head.svg"
                                                                alt="Head of Lary the mascot"></h2>
 
+            <h1> {{ trans('words.food') }}</h1>
+            <h2>{{ __('words.delicious') }}</h2>
             <p class="text-sm mt-14">
                 Another year. Another update. We're refreshing the popular Laravel series with new content.
                 I'm going to keep you guys up to speed with what's going on!
+               
             </p>
 
             <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-8">
@@ -168,7 +200,8 @@
                                 <div class="space-x-2 flex">
                                     <h1 href="#"
                                        class="px-3 py-1 text-3xl font-semibold"
-                                       >{{ $meal->title }}</h1>
+                                       >{{ $meal->translate('en')->title ?? optional($meal->translate('es'))->title }}</h1>
+                                    
     
                                     <p 
                                        class="pt-4 text-blue-700 text-xs uppercase font-bold"
@@ -204,6 +237,7 @@
                             </div>
 
                             <div>
+                               
                                 <a href="/meals/{{ $meal->title }}"
                                    class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
                                 >
@@ -215,8 +249,7 @@
                 </div>
             </article>
                 @endforeach
-                
-
+            
                 
             </div>
 
@@ -252,3 +285,20 @@
         </footer>
     </section>
 </body>
+
+<script>
+
+$englishLink.click(function() {
+     $englishLink.toggleClass('bg-aqua-active');
+     $englishForm.toggleClass('d-none');
+     $spanishLink.toggleClass('bg-aqua-active');
+     $spanishForm.toggleClass('d-none');
+   });
+
+   $spanishLink.click(function() {
+     $englishLink.toggleClass('bg-aqua-active');
+     $englishForm.toggleClass('d-none');
+     $spanishLink.toggleClass('bg-aqua-active');
+     $spanishForm.toggleClass('d-none');
+   });
+</script>

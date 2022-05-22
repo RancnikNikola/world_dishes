@@ -19,6 +19,10 @@ class MealController extends Controller
     public function index()
     {
 
+        // app()->setLocale('es');
+
+       
+
         return view('meals.index', [
             'meals' => Meal::latest()->filter(request(['category', 'tag', 'ingredient']))->get(),
             'categories' => Category::all(),
@@ -35,7 +39,7 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($locale)
     {
         //
     }
