@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Meal;
 
+use App\Models\Tag;
+use App\Models\Meal;
+use App\Models\Ingredient;
+use Illuminate\Database\Seeder;
 
 class MealSeeder extends Seeder
 {
@@ -15,6 +17,13 @@ class MealSeeder extends Seeder
      */
     public function run()
     {
-        // Meal::factory()->times(5)->create();
+        Meal::factory()->count(15)->create();
+
+        foreach (Meal::all() as $meal) {
+            $tags = Tag::inRandomOrder()->take(rand(1, 3))->pluck('id');
+            $ingredients = Ingredient::inRandomOrder()->take(rand(1, 3))->pluck('id');
+            $meal->tags()->attach($tags);
+            $meal->ingredients()->attach($ingredients);
+        }
     }
 }

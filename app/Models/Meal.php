@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Language;
 use App\Models\Ingredient;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -18,6 +19,7 @@ class Meal extends Model implements TranslatableContract
     public $translatedAttributes = ['title', 'description'];
 
     protected $guarded = [];
+    protected $with = ['category', 'tags'];
 
     public function category(){
         return $this->belongsTo(Category::class);
@@ -31,6 +33,11 @@ class Meal extends Model implements TranslatableContract
     public function ingredients(){
         
         return $this->belongsToMany(Ingredient::class);
+    }
+
+    public function languages(){
+        
+        return $this->hasMany(Language::class);
     }
 
     public function scopeFilter($query, $filters) {

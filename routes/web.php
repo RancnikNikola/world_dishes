@@ -15,15 +15,7 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('/', [MealController::class, 'index']);
-Route::get('/meals/{meal:title}', [MealController::class, 'show']);
-
-// Route::get('/', function () {
-//     return redirect()->route('home-locale', app()->getLocale());
-// })->name('home');
-
-// Route::group(['prefix' => '{locale}', 'where' => ['locale' => '[a-zA-Z]{2}']], function () {
-//     Route::get('/', 'HomeController@index')->name('home-locale');
-
-//     Route::get('article/{id}', 'HomeController@article')->name('article');
-// });
+// Route::get('/', [MealController::class, 'index']);
+// Route::get('/meals/{meal:title}', [MealController::class, 'show']);
+// Route::get('/create', [MealController::class, 'create']);
+// Route::post('/', [MealController::class, 'store']);

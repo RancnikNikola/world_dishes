@@ -9,7 +9,6 @@ use App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
-    protected $model = MealTranslation::class;
     /**
      * Seed the application's database.
      *
@@ -17,11 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        // Category::truncate();
-        // Meal::truncate();
-        // MealTranslation::truncate();
-
-        MealTranslation::factory()->create();
+        $this->call([
+            CategorySeeder::class,
+            TagSeeder::class,
+            IngredientSeeder::class,
+            LanguageSeeder::class,
+            MealSeeder::class
+        ]);
     }
 }

@@ -14,12 +14,25 @@ class MealFactory extends Factory
      */
     public function definition()
     {
+    
         return [
-            // 'title' => $this->faker->sentence(2),
-            // 'description' => $this->faker->sentence,
-            'status' => $this->faker->word,
-            'image' => $this->faker->image(null, 640, 480),
-            'category_id' => Category::factory()
+
+            'category_id' => rand(null, 5),
+
+            'en' => [
+                'title' => $this->faker->unique()->sentence,
+                'description' =>  $this->faker->unique()->paragraph,
+            ],
+            'es' => [
+                'title' => $this->faker->unique()->sentence,
+                'description' =>  $this->faker->unique()->paragraph,
+            ],
+            'it' => [
+                'title' => $this->faker->unique()->sentence,
+                'description' =>  $this->faker->unique()->paragraph,
+            ],
+            'status' => 'created'
+
         ];
     }
 }

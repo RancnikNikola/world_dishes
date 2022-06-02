@@ -8,6 +8,10 @@ use App\Models\Tag;
 use App\Models\Ingredient;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMealRequest;
+use App\Http\Resources\MealResource;
+use App\Http\Resources\MealCollection;
+
 
 class MealController extends Controller
 {
@@ -18,20 +22,29 @@ class MealController extends Controller
      */
     public function index()
     {
+        $language = 'en';
 
-        // app()->setLocale('es');
+        $language = request('lang');
+        
+        if (request('lang')) {
+            session()->put('lang', request('lang'));
+            $language = request('lang');
+        } elseif (session('lang')) {
+            $language = session($language);
+        } elseif (config('app.locale')) {
+            $language = config('app.locale');
+        }
 
+        if (isset($language) && config('app.languages.' . $language)) {
+            app()->setLocale($language);
+        }
+
+        app()->setLocale($language);
        
 
-        return view('meals.index', [
-            'meals' => Meal::latest()->filter(request(['category', 'tag', 'ingredient']))->get(),
-            'categories' => Category::all(),
-            'ingredients' => Ingredient::all(),
-            'tags' => Tag::all(),
-            'currentCategory' => Category::firstWhere('slug', request('category')),
-            'currentTag' => Tag::firstWhere('slug', request('tags')),
-            'currentIngredient' => Ingredient::firstWhere('slug', request('ingredient'))
-        ]);
+        return new MealCollection(
+            Meal::latest()->filter(request(['search', 'category', 'tag', 'ingredient']))->paginate(5)
+        );
     }
 
     /**
@@ -39,7 +52,7 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($locale)
+    public function create()
     {
         //
     }
@@ -50,7 +63,7 @@ class MealController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMealRequest $request)
     {
         //
     }
@@ -63,10 +76,7 @@ class MealController extends Controller
      */
     public function show(Meal $meal)
     {
-        return view('meals.show', [
-            'meal' => $meal,
-            'categories' => Category::all()
-        ]);
+       return new MealResource(Meal::findOrFail($meal->id));
     }
 
     /**

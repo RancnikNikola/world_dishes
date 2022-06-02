@@ -15,12 +15,12 @@ class CreateMealTranslations extends Migration
     {
         Schema::create('meal_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('locale')->index();
             $table->foreignId('meal_id')->constrained();
+            $table->string('locale')->index();
             $table->string('title');
             $table->text('description');
-            $table->unique(['meal_id', 'locale']);
             $table->timestamps();
+            $table->unique(['meal_id', 'locale']);
         });
     }
 
