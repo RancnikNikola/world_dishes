@@ -6,7 +6,6 @@ use App\Models\Ingredient;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class IngredientFactory extends Factory
 {
     /**

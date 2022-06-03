@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Language;
@@ -42,15 +41,15 @@ class Meal extends Model implements TranslatableContract
     public function scopeFilter($query, $filters) {
         
         $query->when($filters['category'] ?? false, fn($query, $category) =>
-                $query->whereHas('category', fn ($query) =>
-                    $query->where('slug', $category)));
+            $query->whereHas('category', fn ($query) =>
+                $query->where('slug', $category)));
 
         $query->when($filters['tag'] ?? false, fn($query, $tag) =>
-                $query->whereHas('tags', fn ($query) =>
-                    $query->where('slug', $tag)));
+            $query->whereHas('tags', fn ($query) =>
+                $query->where('slug', $tag)));
 
         $query->when($filters['ingredient'] ?? false, fn($query, $ingredient) =>
-                $query->whereHas('ingredients', fn ($query) =>
-                    $query->where('slug', $ingredient)));
+            $query->whereHas('ingredients', fn ($query) =>
+                $query->where('slug', $ingredient)));
     }
 }
