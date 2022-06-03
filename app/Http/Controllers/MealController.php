@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreMealRequest;
 use App\Http\Resources\MealResource;
 use App\Http\Resources\MealCollection;
+use Carbon\Carbon;
 
 
 class MealController extends Controller
@@ -40,11 +41,16 @@ class MealController extends Controller
         }
 
         app()->setLocale($language);
-       
 
-        return new MealCollection(
-            Meal::latest()->filter(request(['search', 'category', 'tag', 'ingredient']))->paginate(5)
-        );
+        if (request('diff_time') > 0) {
+            return new MealCollection(
+                Meal::withTrashed()->filter(request(['search', 'category', 'tag', 'ingredient']))->paginate()
+            );
+        } else {
+            return new MealCollection(
+                Meal::latest()->filter(request(['search', 'category', 'tag', 'ingredient']))->paginate(5)
+            );
+        }
     }
 
     /**
@@ -53,17 +59,6 @@ class MealController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreMealRequest $request)
     {
         //
     }
@@ -80,17 +75,6 @@ class MealController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Meal  $meal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Meal $meal)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -99,7 +83,13 @@ class MealController extends Controller
      */
     public function update(Request $request, Meal $meal)
     {
-        //
+        $attributes = [
+            'status' => 'modified'
+        ];
+
+        $meal->update($attributes);
+
+        return 'Status updated to modified';
     }
 
     /**
@@ -108,9 +98,20 @@ class MealController extends Controller
      * @param  \App\Models\Meal  $meal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Meal $meal)
-    {
-        //
+    public function destroy($meal)
+    {   
+        $mealToDelete = Meal::findOrFail($meal);
+        
+        $attributes = [
+            'deleted_at' => Carbon::now(),
+            'status' => 'deleted'
+        ];
+
+        $mealToDelete->update($attributes);
+        $mealToDelete->delete();
+
+        return 'Status updated to deleted';
     }
+
 
 }

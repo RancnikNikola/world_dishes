@@ -14,12 +14,13 @@ use Astrotomic\Translatable\Translatable;
 
 class Meal extends Model implements TranslatableContract
 {
-    use HasFactory, SoftDeletes, Translatable;
+    use HasFactory;
+    use SoftDeletes, Translatable;
 
     public $translatedAttributes = ['title', 'description'];
 
     protected $guarded = [];
-    protected $with = ['category', 'tags'];
+    protected $with = ['category', 'tags', 'ingredients'];
 
     public function category(){
         return $this->belongsTo(Category::class);

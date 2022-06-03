@@ -16,21 +16,16 @@ class MealCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection,
-        ];
-    }
-
-    public function with($request)
-    {
-        return [
             'meta' => [
-                'song_count' => $this->collection->count()
+                'currentPage' => $this->currentPage(),
+                'totalItems' => $this->total(),
+                'itemsPerPage' => $this->perPage(),
+                'totalPages' => $this->lastPage()
             ],
+            'data' => $this->collection,
+            'links' => [
+                'self' => url()->full()
+            ]
         ];
     }
-
-    // public function withResponse($request, $response)
-    // {
-    //     $response->header('X-Value', 'True');
-    // }
 }
