@@ -11,6 +11,5 @@ class MealTranslation extends Model
 {
     public $translatedAttributes = ['title', 'description'];
     public $timestamps = false;
-
     protected $guarded = [];
 }

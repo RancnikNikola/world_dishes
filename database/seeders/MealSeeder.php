@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-
 use App\Models\Tag;
 use App\Models\Meal;
 use App\Models\Ingredient;
 use Illuminate\Database\Seeder;
+
 
 class MealSeeder extends Seeder
 {

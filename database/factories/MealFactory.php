@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 
 class MealFactory extends Factory
 {
@@ -14,11 +15,8 @@ class MealFactory extends Factory
      */
     public function definition()
     {
-    
         return [
-
             'category_id' => rand(null, 5),
-
             'en' => [
                 'title' => $this->faker->unique()->sentence,
                 'description' =>  $this->faker->unique()->paragraph,

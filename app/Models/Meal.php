@@ -2,42 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Category;
+
 use App\Models\Tag;
+use App\Models\Category;
 use App\Models\Language;
 use App\Models\Ingredient;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
 class Meal extends Model implements TranslatableContract
 {
     use HasFactory;
-    use SoftDeletes, Translatable;
+    use SoftDeletes;
+    use Translatable;
 
     public $translatedAttributes = ['title', 'description'];
-
     protected $guarded = [];
     protected $with = ['category', 'tags', 'ingredients'];
 
-    public function category(){
+    public function category() {
         return $this->belongsTo(Category::class);
     }
 
-    public function tags(){
-        
+    public function tags() {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function ingredients(){
-        
+    public function ingredients() {
         return $this->belongsToMany(Ingredient::class);
     }
 
-    public function languages(){
-        
+    public function languages() {
         return $this->hasMany(Language::class);
     }
 

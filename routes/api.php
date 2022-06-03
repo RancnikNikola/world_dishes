@@ -15,10 +15,7 @@ use App\Http\Controllers\MealController;
 */
 
 Route::get('/meals', [MealController::class, 'index']);
-
 Route::get('/meals/{meal}', [MealController::class, 'show']);
-
 Route::patch('/meals/{meal}/update', [MealController::class, 'update']);
-
 Route::delete('/meals/{id}/delete', [MealController::class, 'destroy']);
 

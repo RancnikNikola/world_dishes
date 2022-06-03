@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 
 class TagFactory extends Factory
@@ -15,29 +15,17 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-
-
-        // foreach (config('translatable.locales') as $locale) {
-        //     $rules[$locale . '.title'] = 'string';
-        //     $rules[$locale . '.full_text'] = 'string';
-        // }
-
-
         $title = $this->faker->unique()->word;
 
         return [
-
             'en' => [
                 'title' => $title,
             ],
             'slug' => Str::slug($title),
-           
-
             'es' => [
                 'title' => $title,
             ],
             'slug' => Str::slug($title),
-
             'it' => [
                 'title' => $title,
             ],

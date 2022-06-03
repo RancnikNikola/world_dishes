@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Meal;
-use App\Models\Tag;
-use App\Models\Ingredient;
-use App\Models\Category;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreMealRequest;
-use App\Http\Resources\MealResource;
-use App\Http\Resources\MealCollection;
 use Carbon\Carbon;
+use App\Models\Meal;
+use Illuminate\Http\Request;
+use App\Http\Resources\MealCollection;
+
 
 
 class MealController extends Controller
@@ -23,44 +18,19 @@ class MealController extends Controller
      */
     public function index()
     {
-        $language = 'en';
-
-        $language = request('lang');
-        
-        if (request('lang')) {
-            session()->put('lang', request('lang'));
-            $language = request('lang');
-        } elseif (session('lang')) {
-            $language = session($language);
-        } elseif (config('app.locale')) {
-            $language = config('app.locale');
-        }
-
-        if (isset($language) && config('app.languages.' . $language)) {
-            app()->setLocale($language);
-        }
-
-        app()->setLocale($language);
-
         if (request('diff_time') > 0) {
             return new MealCollection(
-                Meal::withTrashed()->filter(request(['search', 'category', 'tag', 'ingredient']))->paginate()
+                Meal::withTrashed()
+                    ->filter(request(['search', 'category', 'tag', 'ingredient']))
+                    ->paginate(5)
             );
         } else {
             return new MealCollection(
-                Meal::latest()->filter(request(['search', 'category', 'tag', 'ingredient']))->paginate(5)
+                Meal::latest()
+                    ->filter(request(['search', 'category', 'tag', 'ingredient']))
+                    ->paginate(5)
             );
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -84,7 +54,8 @@ class MealController extends Controller
     public function update(Request $request, Meal $meal)
     {
         $attributes = [
-            'status' => 'modified'
+            'status' => 'modified',
+            'updated_at' => Carbon::now()
         ];
 
         $meal->update($attributes);

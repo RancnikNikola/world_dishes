@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MealController;
-use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +12,3 @@ use App\Http\Controllers\CategoryController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/', [MealController::class, 'index']);
-// Route::get('/meals/{meal:title}', [MealController::class, 'show']);
-// Route::get('/create', [MealController::class, 'create']);
-// Route::post('/', [MealController::class, 'store']);
