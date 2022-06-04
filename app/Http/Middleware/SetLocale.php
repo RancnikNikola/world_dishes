@@ -17,17 +17,13 @@ class SetLocale
     public function handle(Request $request, Closure $next)
     {
         $language = 'en';
-        $language = request('lang');
-
         if (request('lang')) {
             session()->put('lang', request('lang'));
             $language = request('lang');
         }
-
         if (isset($language) && config('app.languages.' . $language)) {
             app()->setLocale($language);
         }
-
         app()->setLocale($language);
 
         return $next($request);

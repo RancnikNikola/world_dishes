@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use App\Http\Resources\MealResource;
 use App\Http\Resources\MealCollection;
+
 
 class MealController extends Controller
 {
